@@ -1,32 +1,30 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 
-// import store
-import store from '_redux/store'
 // import devtools
-import DevTools from './devTools.jsx'
+import DevTools from './dev/devTools'
 
-let showDevTools
-if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
-  // DEV: expose store as a global var
-  window.store = store
-  showDevTools = <DevTools />
-} else {
-  showDevTools = ''
-}
 
 let wrapper = React.createClass({
-  componentDidMount: function() {
-     console.log(this.props)
-   },
 
   render() {
-    let { children } = this.props
+    console.log('reduxWrapper');
+    console.log(this.props);
+    let showDevTools
+    if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
+      showDevTools = <DevTools />
+    } else {
+      showDevTools = ''
+    }
+
+    // var children = React.Children.map(this.props.children, function (child) {
+    //   return <div> {child} </div>
+    // })
 
     return ( 
-      <Provider store={store}>
+      <Provider store={this.props.store}>
         <div>
-          {children}
+          {this.props.children}
           {showDevTools}
         </div>
       </Provider>

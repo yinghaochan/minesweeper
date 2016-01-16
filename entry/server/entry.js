@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
   // Load Webpack infos for SSR
   ReactRouterSSR.LoadWebpackStats(WebpackStats);
 
-  require('../client/routes');
+  // require('../client/routes');
 } else {
   // To activate the unit tests:
   // - meteor add sanjo:jasmine
