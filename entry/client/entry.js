@@ -1,11 +1,21 @@
+import { mongols } from '_db'
 // Methods for optimistic updates
-import 'TodoApp/todo-methods';
+import '../../methods/client.js';
+import '../../methods/both.js';
 
-import './routes';
+import '_db';
+import './root';
+
 
 Accounts.ui.config({
   passwordSignupFields: 'USERNAME_ONLY'
 });
+
+// use ctrl+m to view these collections on the client
+if (process.env.NODE_ENV !== 'production'){
+  Package['meteortoys:toykit'].MeteorToysDict.set('Mongol', 
+    {collections: mongols })
+}
 
 // To activate the unit tests:
 // - meteor add sanjo:jasmine

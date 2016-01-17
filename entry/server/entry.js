@@ -1,5 +1,8 @@
-import 'TodoApp/todo-methods';
-import 'TodoApp/server/todo-publications';
+import '_db'
+import '_db/publications'
+
+import '../../methods/both';
+import '../../methods/server';
 
 // Do server-rendering only in proudction mode
 if (process.env.NODE_ENV === 'production') {

@@ -1,14 +1,43 @@
-# kickstart-hugeapp by thereactivestack
+# Re: scaffold
+A React scaffold for meteor with:
+- Redux: Flux-like data flow, with thunk 
+- Devtools: time travel for redux, Mongol for viewing client DB 
+- Webpack: Hot module reload / code splitting
 
-Kickstart a huge project fast with code splitting!
+based off thereactivestack's wonderful projects
 
-If you would like a simpler kickstart, see the [kickstart-simple project](https://github.com/thereactivestack/kickstart-simple).
+## Get started
+1. Update / Install Meteor
+1. OPTIONAL: install eslint
+1. clone this repo 
+1. run `meteor` in root
 
-Clone this project to start a simple project using Meteor, React.js and Webpack.
+# Develop
+- `CTRL + H` for redux devtools
+- `CTRL + M` to view minimongo
+- OPTIONAL: `meteor add autopublish` get the entire db on client
 
-1. `git clone https://github.com/thereactivestack/kickstart-hugeapp.git`
-1. `cd kickstart-hugeapp`
-1. `meteor`
+## Create a new route
+1. etc 
+
+## Add a client-side NPM module
+1. find the module name and version on npm
+1. add it to `webpack.packages.json`
+
+## Add a server-side NPM module
+1. find the module name and version on npm
+1. add the npm module: https://atmospherejs.com/meteorhacks/npm
+1. follow those instructions!
+
+
+## Create a redux action
+1. etc
+
+## Publish / subscribe data
+1. etc.
+
+## Use Meteor methods
+
 
 # Code splitting
 When developing a huge application, you don't want to serve the entire JavaScript to the client. You might want to wait before he actually need it. This is the problem code splitting is fixing.
