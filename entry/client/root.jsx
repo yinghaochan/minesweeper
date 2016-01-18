@@ -1,6 +1,7 @@
 import routes from './routes'
 import ReduxWrapper from './reduxWrapper.jsx'
 import { createHistory } from 'history'
+import { storeBuilder } from '_redux/store'
 
 
 // Setup the singleton store based on environment
@@ -12,43 +13,15 @@ import thunk from 'redux-thunk'
 import DevTools from './dev/devTools'
 import reducers from '_redux/reducers'
 
+let store = null
+
 Meteor.startup(() => {
   const history = createHistory()
 
   const clientOptions = {
     wrapper: ReduxWrapper,
     history: history,
-    createReduxStore: (initialState, history) => {
-      
-      // sync dispatched route actions to history
-      const historyMiddleware = syncHistory(history)
-      let finalCreateStore
-      let store
-
-      // Implement store with redux devtools in dev environment only
-      if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
-        finalCreateStore = compose(
-          // Enable middleware:
-          applyMiddleware(historyMiddleware, thunk),
-          // Enable devtools:
-          DevTools.instrument(),
-
-          // Lets you write ?debug_session=<name> in address bar to persist debug sessions
-          persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-        )(createStore);
-
-        store = finalCreateStore(reducers, initialState)
-
-      } else {
-        finalCreateStore = applyMiddleware(historyMiddleware, thunk)(createStore)
-        store = finalCreateStore(reducers, initialState)
-      }
-
-      window.store = store
-      historyMiddleware.listenForReplays(store)
-
-      return store
-    }
+    createReduxStore: storeBuilder,
   }
 
   const serverOptions = {
@@ -60,4 +33,5 @@ Meteor.startup(() => {
 
 })
 
-
+window.store = store
+export default store
