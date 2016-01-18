@@ -5,21 +5,24 @@ import { Provider } from 'react-redux'
 import DevTools from './dev/devTools'
 
 
-
-let Wrapper = React.createClass({
+let wrapper = React.createClass({
 
   render() {
-    const showDevTools = process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR
-     
+    let showDevTools
+    if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
+      showDevTools = <DevTools />
+    } else {
+      showDevTools = ''
+    }
+
     return ( 
       <Provider store={this.props.store}>
         <div>
           {this.props.children}
-          {showDevTools ? <DevTools /> : ''}
+          {showDevTools}
         </div>
       </Provider>
     )}
 })
 
-export default Wrapper
-
+export default wrapper

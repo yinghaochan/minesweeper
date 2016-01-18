@@ -1,17 +1,8 @@
-import routes from './routes'
-import ReduxWrapper from './reduxWrapper.jsx'
+import routes from 'Root/client/routes'
+import ReduxWrapper from 'Root/client/reduxWrapper.jsx'
 import { createHistory } from 'history'
 import { storeBuilder } from '_redux/store'
 
-
-// Setup the singleton store based on environment
-import { persistState } from 'redux-devtools'
-import { compose, createStore, applyMiddleware } from 'redux'
-import { syncHistory } from 'redux-simple-router'
-import thunk from 'redux-thunk'
-
-import DevTools from './dev/devTools'
-import reducers from '_redux/reducers'
 
 let store = null
 

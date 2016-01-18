@@ -7,7 +7,7 @@ import { createHistory } from 'history'
 import { syncHistory } from 'redux-simple-router'
 
 
-import DevTools from '../../entry/client/dev/devTools.jsx'
+import DevTools from 'Root/client/reduxDevtools/devTools'
 
 let store
 

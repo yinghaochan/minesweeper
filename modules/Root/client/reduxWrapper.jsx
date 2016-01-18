@@ -39,6 +39,6 @@ React.createClass({
 
 now access using this.context.store
 or using (props, context) => {} + declare contextTypes!
-or using (props, {store}) => {}
+or using (props, {store}) => {} + declare contextTypes!
 
-  */}
+*/
