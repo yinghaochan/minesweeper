@@ -1,12 +1,15 @@
-import 'TodoApp/todo-methods';
-import 'TodoApp/server/todo-publications';
+import 'db'
+import 'db/publications'
+
+import 'methods/both';
+import 'methods/server';
 
 // Do server-rendering only in proudction mode
 if (process.env.NODE_ENV === 'production') {
   // Load Webpack infos for SSR
   ReactRouterSSR.LoadWebpackStats(WebpackStats);
 
-  require('../client/routes');
+  require('../client/root');
 } else {
   // To activate the unit tests:
   // - meteor add sanjo:jasmine

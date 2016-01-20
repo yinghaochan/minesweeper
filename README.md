@@ -1,14 +1,69 @@
-# kickstart-hugeapp by thereactivestack
+# Re: scaffold
+A React scaffold for meteor with:
+- Redux: Flux-like data flow, with thunk 
+- Devtools: time travel for redux, Mongol for viewing client DB 
+- Webpack: Hot module reload / code splitting
 
-Kickstart a huge project fast with code splitting!
+based off thereactivestack's wonderful projects
 
-If you would like a simpler kickstart, see the [kickstart-simple project](https://github.com/thereactivestack/kickstart-simple).
+## Get started
+1. Update / Install Meteor
+  1. `$ curl https://install.meteor.com/ | sh`
+  1. Meteor update
 
-Clone this project to start a simple project using Meteor, React.js and Webpack.
+1. OPTIONAL: install eslint
+1. clone this repo 
+1. run `meteor` in root
 
-1. `git clone https://github.com/thereactivestack/kickstart-hugeapp.git`
-1. `cd kickstart-hugeapp`
-1. `meteor`
+# Redux Data flow
+## local-only
+Use the standard redux data flow
+1. Write your actions and reducers in a new `modules/_redux` folder
+  1. Don't forget to add it to the combined reducer in `modules/_redux/reducers.jsx`
+  1. You might want to write everything in a `client` folder (see faq)
+1. Use the `connect` wrapper to inject the dispatch function and call the action
+  1. See [the redux docs](http://rackt.org/redux/docs/basics/UsageWithReact.html)
+  
+## interacting with the server
+1. Write a Meteor Method in `methods` 
+  1. add it to the `methods/server.js` file
+  1. add it to the `methods/both.js` file for optimistic methods
+1. Publish the relevant data in the `modules/db/publications` file
+1. Write a [Tracker.autorun()](https://github.com/meteor/meteor/wiki/Tracker-Manual) function
+  1. it shoud contain the subscribe call in it for the relevant data
+  1. it should dispatch an action with a payload of the updated data (using Meteor.store.dispatch gets the dispatch function)
+1. use that action to update the store 
+
+# Develop
+- `CTRL + H` for redux devtools
+- `CTRL + M` to view minimongo
+- OPTIONAL: `meteor add autopublish` get the entire db on client
+
+## Create a new route
+1. check out `modules/AdminApp` for an example
+1. Add a main route to `Root/client/routes` 
+
+## Add a client-side NPM module
+1. find the module name and version on npm
+1. add it to `webpack.packages.json`
+
+## Add a server-side NPM module
+1. find the module name and version on npm
+1. add the npm module: https://atmospherejs.com/meteorhacks/npm
+1. follow those instructions!
+
+
+## Create a redux action
+1. etc
+
+## Publish / subscribe data
+1. etc.
+
+## Use Meteor methods
+
+# FAQ
+## Why are there so many `/client` folders?
+client folders get hot-reloaded by webpack, without the need for restarting meteor. It's just much faster for development. 
 
 # Code splitting
 When developing a huge application, you don't want to serve the entire JavaScript to the client. You might want to wait before he actually need it. This is the problem code splitting is fixing.

@@ -1,4 +1,4 @@
-import Tasks from 'TodoApp/collections/Tasks';
+import { Tasks } from 'db'
 
 Meteor.methods({
   'fixtures/cleanTodo': () => {

@@ -1,10 +1,10 @@
 import { Component, PropTypes } from 'react';
-import style from 'TodoApp/client/css/TodoApp.import.css';
+import style from 'client/TodoApp/css/TodoApp.import.css';
 
 export default class TodoItem extends Component {
   static propTypes = {
     task: PropTypes.object.isRequired
-  }
+  };
 
   handleChecked(e) {
     // Set the checked property to the opposite of its current value

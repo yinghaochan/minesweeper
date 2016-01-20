@@ -1,8 +1,17 @@
 import { Component } from 'react';
 import Helmet from 'react-helmet';
 
+/*
+
+Global components inside Router here! 
+
+This always renders inside the routing context, no matter the route.
+
+ */
+
 export default class MainApp extends Component {
   render() {
+
     return (
       <div>
         <Helmet
@@ -11,6 +20,7 @@ export default class MainApp extends Component {
           ]}
         />
         {this.props.children}
+
       </div>
     )
   }
