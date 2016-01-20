@@ -10,21 +10,16 @@ import style from './css/TodoApp.import.css'
 
 // import redux stuff
 import { connect } from 'react-redux'
-import { toggleHideCompleted } from '_redux/TodoApp/visibilityFilter'
 
 @ReactMixin.decorate(ReactMeteorData)
 export default class TodoMain extends Component {
-
-  state = {
-    hideCompleted: false
-  };
 
   getMeteorData() {
     Meteor.subscribe('tasks');
 
     let taskFilter = {};
 
-    if (this.state.hideCompleted) {
+    if (this.props.hideCompleted) {
       taskFilter.checked = {$ne: true};
     }
 
@@ -37,10 +32,6 @@ export default class TodoMain extends Component {
       user: Meteor.user()
     };
   }
-
-  handleToggleHideCompleted = (e) => {
-    this.props.dispatch(toggleHideCompleted())
-  };
 
   render() {
     if (!this.data.tasks) {
@@ -55,7 +46,6 @@ export default class TodoMain extends Component {
           <TodoHeader
               incompleteCount={this.data.incompleteCount}
               hideCompleted={this.props.hideCompleted}
-              toggleHideCompleted={this.handleToggleHideCompleted}
           />
           <TodoList tasks={this.data.tasks} />
         </div>

@@ -20,7 +20,7 @@ export const storeBuilder = (initialState, history) => {
   if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
     finalCreateStore = compose(
       // Enable middleware:
-      applyMiddleware(historyMiddleware, thunk),
+      applyMiddleware(thunk, historyMiddleware),
       // Enable devtools:
       DevTools.instrument(),
 

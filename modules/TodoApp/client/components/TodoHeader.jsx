@@ -1,12 +1,15 @@
 import { Component, PropTypes } from 'react';
 import style from 'TodoApp/client/css/TodoApp.import.css';
+import { connect } from 'react-redux'
+
+import { toggleHideCompleted } from '_redux/TodoApp/visibilityFilter'
+
 
 const LoginButtons = BlazeToReact('loginButtons');
 
-export default class TodoHeader extends Component {
+class TodoHeader extends Component {
   static propTypes = {
     hideCompleted: PropTypes.bool,
-    toggleHideCompleted: PropTypes.func.isRequired,
     incompleteCount: PropTypes.number.isRequired
   };
 
@@ -26,6 +29,7 @@ export default class TodoHeader extends Component {
 
   render() {
     let form = null;
+    const { dispatch } = this.props
 
     if (Meteor.userId()) {
       form = (
@@ -43,7 +47,9 @@ export default class TodoHeader extends Component {
         </h1>
 
         <label className={style.hideCompleted}>
-          <input type="checkbox" checked={this.props.hideCompleted} onChange={this.props.toggleHideCompleted} />
+          <input type="checkbox" 
+          checked={this.props.hideCompleted} 
+          onChange={() => dispatch(toggleHideCompleted())} />
           Hide Completed Tasks
         </label>
 
@@ -54,3 +60,5 @@ export default class TodoHeader extends Component {
     );
   }
 }
+
+export default connect()(TodoHeader)
