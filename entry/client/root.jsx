@@ -1,10 +1,9 @@
-import routes from 'Root/client/routes'
-import ReduxWrapper from 'Root/client/reduxWrapper.jsx'
+import routes from 'client/Root/routes'
+import ReduxWrapper from 'client/Root/reduxWrapper.jsx'
 import { createHistory } from 'history'
-import storeBuilder from 'Root/storeBuilder'
+import storeBuilder from 'client/Root/storeBuilder'
 
 
-let store = null
 
 Meteor.startup(() => {
   const history = createHistory()
@@ -24,5 +23,3 @@ Meteor.startup(() => {
 
 })
 
-window.store = store
-export default store

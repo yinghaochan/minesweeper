@@ -2,11 +2,11 @@
 import { persistState } from 'redux-devtools'
 import { compose, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import reducers from '_redux/reducers'
+import reducers from 'client/_redux/reducers'
 import { syncHistory } from 'redux-simple-router'
 
 
-import DevTools from 'Root/client/reduxDevtools/devTools'
+import DevTools from './reduxDevtools/devTools'
 
 
 export const storeBuilder = (initialState, history) => {
@@ -15,6 +15,7 @@ export const storeBuilder = (initialState, history) => {
   const historyMiddleware = syncHistory(history)
   let finalCreateStore
   let store
+  let nextReducer
 
   // Implement store with redux devtools in dev environment only
   if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
@@ -29,11 +30,13 @@ export const storeBuilder = (initialState, history) => {
     )(createStore);
 
     store = finalCreateStore(reducers, initialState)
-    // if (module.hot) {
-    //   module.hot.accept('_redux/reducers', () =>
-    //     store.replaceReducer(require('_redux/reducers'))
-    //   )
-    // }
+    if (module.hot) {
+      module.hot.accept('./../_redux/reducers.js', () => {
+        nextReducer = require('./../_redux/reducers.js')
+        store.replaceReducer(nextReducer.default)
+      }
+      )
+    }
   } else {
     finalCreateStore = applyMiddleware(historyMiddleware, thunk)(createStore)
     store = finalCreateStore(reducers, initialState)

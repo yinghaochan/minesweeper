@@ -1,9 +1,11 @@
-import { mongols } from '_db'
+import { mongols } from 'db'
 // Methods for optimistic updates
-import '../../methods/client.js';
-import '../../methods/both.js';
+import 'methods/client.js';
+import 'methods/both.js';
 
-import '_db';
+import 'db';
+
+// app starts here!
 import './root';
 
 

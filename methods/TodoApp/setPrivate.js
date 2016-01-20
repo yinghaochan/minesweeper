@@ -1,4 +1,4 @@
-import { Tasks } from '_db'
+import { Tasks } from 'db'
 
 export default function (taskId, setToPrivate) {
   var task = Tasks.findOne(taskId);

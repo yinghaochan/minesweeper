@@ -1,4 +1,4 @@
-import { Tasks } from '_db'
+import { Tasks } from 'db'
 
 export default function (text) {
   // Make sure the user is logged in before inserting a task

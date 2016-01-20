@@ -28,7 +28,7 @@ Use the standard redux data flow
 1. Write a Meteor Method in `methods` 
   1. add it to the `methods/server.js` file
   1. add it to the `methods/both.js` file for optimistic methods
-1. Publish the relevant data in the `modules/_db/publications` file
+1. Publish the relevant data in the `modules/db/publications` file
 1. Write a [Tracker.autorun()](https://github.com/meteor/meteor/wiki/Tracker-Manual) function
   1. it shoud contain the subscribe call in it for the relevant data
   1. it should dispatch an action with a payload of the updated data (using Meteor.store.dispatch gets the dispatch function)

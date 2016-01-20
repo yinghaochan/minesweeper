@@ -1,11 +1,12 @@
-import { Tasks } from '_db'
+// write or import publications here
+import * as DB from 'db'
 
 // This code only runs on the server
 Meteor.publish('tasks', function () {
-  return Tasks.find({
+  return DB.Tasks.find({
     $or: [
       { private: {$ne: true} },
       { owner: this.userId }
     ]
-  });
-});
+  })
+})

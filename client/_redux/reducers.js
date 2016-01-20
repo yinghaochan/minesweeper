@@ -6,9 +6,9 @@ import hideCompleted from './TodoApp/visibilityFilter'
 
 // You can access the store from Meteor.store (it's global)
 
-const reducers = combineReducers({
+export default combineReducers({
   routing,
   hideCompleted: hideCompleted,
 })
 
-export default reducers
+

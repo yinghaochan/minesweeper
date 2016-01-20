@@ -5,7 +5,7 @@ import ReactMixin from 'react-mixin';
 import TodoHeader from './components/TodoHeader';
 import TodoList from './components/TodoList';
 
-import { Tasks } from '_db'
+import { Tasks } from 'db'
 import style from './css/TodoApp.import.css'
 
 // import redux stuff
@@ -38,7 +38,6 @@ export default class TodoMain extends Component {
       // loading
       return null;
     }
-    console.log(this.props.hideCompleted);
 
     return (
         <div className={style.container}>

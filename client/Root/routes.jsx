@@ -1,6 +1,6 @@
 import MainApp from './MainApp'
-import TodoApp from 'TodoApp/client'
-import AdminApp from 'AdminApp/client'
+import TodoApp from 'client/TodoApp'
+import AdminApp from 'client/AdminApp'
 /*
   
   check out the react-router dynamic routing docs for more

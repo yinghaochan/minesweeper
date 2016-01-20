@@ -1,8 +1,8 @@
 import { Component, PropTypes } from 'react';
-import style from 'TodoApp/client/css/TodoApp.import.css';
+import style from 'client/TodoApp/css/TodoApp.import.css';
 import { connect } from 'react-redux'
 
-import { toggleHideCompleted } from '_redux/TodoApp/visibilityFilter'
+import { toggleHideCompleted } from 'client/_redux/TodoApp/visibilityFilter'
 
 
 const LoginButtons = BlazeToReact('loginButtons');
