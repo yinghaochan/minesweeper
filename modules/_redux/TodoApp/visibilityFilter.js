@@ -8,6 +8,13 @@ export const hideCompleted = (boolean) => {
     payload: !!boolean,
   }
 }
+
+export const toggleHideCompleted = () => {
+  return (dispatch, getState) => {
+    const state = getState()
+    dispatch(hideCompleted(!state.hideCompleted))
+  }
+}
 //////////////
 // REDUCERS //
 //////////////

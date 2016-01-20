@@ -8,6 +8,10 @@ import TodoList from './components/TodoList';
 import { Tasks } from '_db'
 import style from './css/TodoApp.import.css'
 
+// import redux stuff
+import { connect } from 'react-redux'
+import { toggleHideCompleted } from '_redux/TodoApp/visibilityFilter'
+
 @ReactMixin.decorate(ReactMeteorData)
 export default class TodoMain extends Component {
 
@@ -35,7 +39,7 @@ export default class TodoMain extends Component {
   }
 
   handleToggleHideCompleted = (e) => {
-    this.setState({ hideCompleted: e.target.checked });
+    this.props.dispatch(toggleHideCompleted())
   };
 
   render() {
@@ -43,13 +47,14 @@ export default class TodoMain extends Component {
       // loading
       return null;
     }
+    console.log(this.props.hideCompleted);
 
     return (
         <div className={style.container}>
           <Link to="/admin">Admin</Link>
           <TodoHeader
               incompleteCount={this.data.incompleteCount}
-              hideCompleted={this.state.hideCompleted}
+              hideCompleted={this.props.hideCompleted}
               toggleHideCompleted={this.handleToggleHideCompleted}
           />
           <TodoList tasks={this.data.tasks} />
@@ -57,3 +62,12 @@ export default class TodoMain extends Component {
     );
   }
 };
+
+function mapStateToProps (state){
+  return {
+    hideCompleted: state.hideCompleted
+  }
+}
+
+export default connect(mapStateToProps)(TodoMain)
+
