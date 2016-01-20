@@ -1,7 +1,7 @@
 import routes from 'Root/client/routes'
 import ReduxWrapper from 'Root/client/reduxWrapper.jsx'
 import { createHistory } from 'history'
-import { storeBuilder } from '_redux/store'
+import storeBuilder from 'Root/storeBuilder'
 
 
 let store = null

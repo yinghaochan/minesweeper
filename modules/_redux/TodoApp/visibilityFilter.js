@@ -2,20 +2,22 @@
 // ACTIONS //
 /////////////
 
-export const setVisibilityFilter = (filter) => {
+export const hideCompleted = (boolean) => {
   return {
-    type: 'SET_VISIBILITY_FILTER',
-    filter
+    type: 'HIDE_COMPLETED',
+    payload: !!boolean,
   }
 }
 //////////////
 // REDUCERS //
 //////////////
 
-export const visibilityFilter = (state = 'SHOW_ALL', action = {}) => {
+const initialState = false
+
+export default function (state = initialState, action) {
   switch (action.type) {
-    case 'SET_VISIBILITY_FILTER':
-      return action.filter
+    case 'HIDE_COMPLETED':
+      return action.payload
     default:
       return state
   }
