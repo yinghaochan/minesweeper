@@ -1,16 +1,17 @@
 import routes from 'client/Root/routes'
-import ReduxWrapper from 'client/Root/reduxWrapper.jsx'
-import { createHistory } from 'history'
-import storeBuilder from 'client/Root/storeBuilder'
-
-
+/*
+    uses an alias called 'RootEnv/' that leads to 
+    client/Root/development 
+    or
+    client/Root/production
+ */
+import Wrapper from 'RootEnv/reduxWrapper'
+import storeBuilder from 'RootEnv/storeBuilder'
 
 Meteor.startup(() => {
-  const history = createHistory()
-
+  
   const clientOptions = {
-    wrapper: ReduxWrapper,
-    history: history,
+    wrapper: Wrapper,
     createReduxStore: storeBuilder,
   }
 

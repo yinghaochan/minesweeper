@@ -1,6 +1,20 @@
 var webpack = require('webpack');
 var path = require('path');
 
+/*
+    create an alias called 'RootEnv/' that leads to 
+    client/Root/development 
+    or
+    client/Root/production
+ */
+var configPath
+if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR) {
+  configPath = path.join(__dirname, '..', 'client', 'Root', 'development');
+} else {
+  configPath = path.join(__dirname, '..', 'client', 'Root', 'production');
+}
+
+
 module.exports = {
   externals: {
     // Make sure we use Meteor package for jQuery, react and react-router
@@ -24,6 +38,9 @@ module.exports = {
   },
   resolve: {
     root: path.join(__dirname, '..'),
+    alias: {
+      RootEnv: configPath
+    },
     extensions: ['', '.js', '.jsx', '.json', '.css', '.scss']
   }
 };

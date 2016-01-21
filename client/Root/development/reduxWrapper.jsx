@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 
 // import devtools
-import DevTools from './reduxDevtools/devTools.jsx'
+import DevTools from '../reduxDevtools/devTools.jsx'
 
 /*
 
@@ -28,17 +28,4 @@ let Wrapper = React.createClass({
 
 export default Wrapper
 
- /*
- 
- access store using contexts
-React.createClass({
-  contextTypes: {
-    store: React.PropTypes.object
-  }
-})
 
-now access using this.context.store
-or using (props, context) => {} + declare contextTypes!
-or using (props, {store}) => {} + declare contextTypes!
-
-*/
