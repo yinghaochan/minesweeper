@@ -53,13 +53,15 @@ Use the standard redux data flow
 1. follow those instructions!
 
 
-## Create a redux action
-1. etc
+## Create a redux thingy
+1. See `client/_redux`
 
 ## Publish / subscribe data
-1. etc.
+1. See `db/publications`
 
 ## Use Meteor methods
+1. See `methods/`
+2. write them as functions!
 
 # FAQ
 ## Why are there so many `/client` folders?

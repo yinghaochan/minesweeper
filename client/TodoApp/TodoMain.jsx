@@ -16,9 +16,12 @@ const TodoMain = React.createClass({
 
   getMeteorData() {
     const handle = Meteor.subscribe('tasks')
-
     let taskFilter = {}
-    taskFilter.checked = this.props.hideCompleted ? {$ne: true} : undefined
+
+    // don't use a ? operator here, it's not reactive (!!??)
+    if (this.props.hideCompleted){
+      taskFilter.checked = {$ne: true}
+    }
 
     return {
       loadingStatus: ! handle.ready(),
