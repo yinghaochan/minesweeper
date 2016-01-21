@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { createClass, Component } from 'react';
 import Helmet from 'react-helmet';
 
 /*
@@ -9,7 +9,7 @@ This always renders inside the routing context, no matter the route.
 
  */
 
-export default class MainApp extends Component {
+export default createClass({
   render() {
 
     return (
@@ -24,4 +24,4 @@ export default class MainApp extends Component {
       </div>
     )
   }
-}
+})

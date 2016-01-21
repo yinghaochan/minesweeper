@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 import reducers from 'client/_redux/reducers'
 import { syncHistory } from 'redux-simple-router'
 import { persistState } from 'redux-devtools'
-import DevTools from './reduxDevtools/devTools'
+import DevTools from '../reduxDevtools/devTools'
 
 export const storeBuilder = (initialState, history) => {
   
@@ -35,8 +35,8 @@ export const storeBuilder = (initialState, history) => {
 
     // HMR for changes to reducers
     if (module.hot) {
-      module.hot.accept('./../_redux/reducers.js', () => {
-        nextReducer = require('./../_redux/reducers.js')
+      module.hot.accept('client/_redux/reducers.js', () => {
+        nextReducer = require('client/_redux/reducers.js')
         store.replaceReducer(nextReducer.default)
       })
     }

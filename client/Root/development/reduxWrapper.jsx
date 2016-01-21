@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 
 // import devtools
-import DevTools from './reduxDevtools/devTools.jsx'
+import DevTools from '../reduxDevtools/devTools.jsx'
 
 /*
 
