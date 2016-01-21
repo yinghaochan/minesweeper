@@ -1,56 +1,53 @@
-import { Component } from 'react';
-import { Link } from 'react-router';
-import ReactMixin from 'react-mixin';
-
-import TodoHeader from './components/TodoHeader';
-import TodoList from './components/TodoList';
-
-import { Tasks } from 'db'
-import style from './css/TodoApp.import.css'
-
-// import redux stuff
+import React from 'react'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
-@ReactMixin.decorate(ReactMeteorData)
-export default class TodoMain extends Component {
+import TodoHeader from './components/TodoHeader'
+import TodoItem from './components/TodoItem'
+
+import { Tasks } from 'db'
+
+import style from './css/TodoApp.import.css'
+
+
+const TodoMain = React.createClass({
+
+  mixins: [ReactMeteorData],
 
   getMeteorData() {
-    Meteor.subscribe('tasks');
+    const handle = Meteor.subscribe('tasks')
 
-    let taskFilter = {};
-
-    if (this.props.hideCompleted) {
-      taskFilter.checked = {$ne: true};
-    }
-
-    const tasks = Tasks.find(taskFilter, {sort: {createdAt: -1}}).fetch();
-    const incompleteCount = Tasks.find({checked: {$ne: true}}).count();
+    let taskFilter = {}
+    taskFilter.checked = this.props.hideCompleted ? {$ne: true} : undefined
 
     return {
-      tasks,
-      incompleteCount,
+      loadingStatus: ! handle.ready(),
+      tasks: Tasks.find(taskFilter, {sort: {createdAt: -1}}).fetch(),
+      incompleteCount: Tasks.find({checked: {$ne: true}}).count(),
       user: Meteor.user()
-    };
-  }
+    }
+  },
+
+  renderTasks() {
+    return this.data.tasks.map((task) => {
+      return <TodoItem key={task._id} task={task} />
+    })
+  },
 
   render() {
-    if (!this.data.tasks) {
-      // loading
-      return null;
-    }
-
     return (
         <div className={style.container}>
           <Link to="/admin">Admin</Link>
           <TodoHeader
-              incompleteCount={this.data.incompleteCount}
-              hideCompleted={this.props.hideCompleted}
+            incompleteCount={this.data.incompleteCount}
+            hideCompleted={this.props.hideCompleted}
           />
-          <TodoList tasks={this.data.tasks} />
+          {this.renderTasks()}
         </div>
-    );
-  }
-};
+    )
+  }  
+})
+
 
 function mapStateToProps (state){
   return {

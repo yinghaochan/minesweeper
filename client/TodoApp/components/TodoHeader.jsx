@@ -28,16 +28,13 @@ class TodoHeader extends Component {
   }
 
   render() {
-    let form = null;
     const { dispatch } = this.props
 
-    if (Meteor.userId()) {
-      form = (
-        <form className={style.newTask} onSubmit={this.handleSubmit.bind(this)}>
-          <input type="text" name="text" placeholder="Type to add new tasks" />
-        </form>
-      );
-    }
+    let form = (
+      <form className={style.newTask} onSubmit={this.handleSubmit.bind(this)}>
+        <input type="text" name="text" placeholder="Type to add new tasks" />
+      </form>
+    )
 
     return (
       <header>
