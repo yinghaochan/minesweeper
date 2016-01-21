@@ -1,16 +1,22 @@
 import routes from 'client/Root/routes'
-import ReduxWrapper from 'client/Root/reduxWrapper.jsx'
-import { createHistory } from 'history'
+import Wrapper from 'client/Root/reduxWrapper'
 import storeBuilder from 'client/Root/storeBuilder'
 
-
-
 Meteor.startup(() => {
-  const history = createHistory()
+  // let Wrapper
+  // let storeBuilder
 
+  // // Skip loading of Wrapper with devtools in production 
+  // if (process.env.NODE_ENV !== 'production' && !process.env.IS_MIRROR){
+  //   Wrapper = require('client/Root/reduxWrapper').default
+  //   storeBuilder = require('client/Root/storeBuilder.dev').default
+  // } else {
+  //   storeBuilder = require('client/Root/storeBuilder.prod').default
+  //   Wrapper = Provider
+  // }
+  
   const clientOptions = {
-    wrapper: ReduxWrapper,
-    history: history,
+    wrapper: Wrapper,
     createReduxStore: storeBuilder,
   }
 

@@ -65,6 +65,19 @@ Use the standard redux data flow
 ## Why are there so many `/client` folders?
 client folders get hot-reloaded by webpack, without the need for restarting meteor. It's just much faster for development. 
 
+## Access the store from contexts
+ ```js
+React.createClass({
+  contextTypes: {
+    store: React.PropTypes.object
+  }
+})
+
+// now access using this.context.store
+// or using (props, context) => {} + declare contextTypes!
+// or using (props, {store}) => {} + declare contextTypes!
+```
+
 # Code splitting
 When developing a huge application, you don't want to serve the entire JavaScript to the client. You might want to wait before he actually need it. This is the problem code splitting is fixing.
 
