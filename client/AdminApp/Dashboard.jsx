@@ -1,9 +1,22 @@
-import { Component } from 'react';
+import React from 'react'
+import {Messages as MessagesDB } from 'db'
 
-export default class Dashboard extends Component {
-  render() {
+
+const Content = React.createClass({
+  mixins:[ReactMeteorData],
+  getMeteorData(){
+    return{
+      user:Meteor.user(),
+    }
+  },
+  render(){
     return (
-      <p>The admin is not bundled with the app and only loaded once needed!</p>
-    );
+      <div>
+        This page is not loaded till needed
+      </div>
+      )
   }
-}
+})
+
+
+export default Content
