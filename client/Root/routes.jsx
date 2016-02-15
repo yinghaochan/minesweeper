@@ -1,6 +1,7 @@
 import MainApp from './MainApp'
 import TodoApp from 'client/TodoApp'
 import AdminApp from 'client/AdminApp'
+import Minesweeper from 'client/Minesweeper'
 /*
   
   check out the react-router dynamic routing docs for more
@@ -15,7 +16,8 @@ export default {
     component: MainApp,
     childRoutes: [
       TodoApp,
-      AdminApp
+      AdminApp,
+      Minesweeper,
     ]
   }
 

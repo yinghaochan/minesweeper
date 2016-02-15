@@ -40,7 +40,8 @@ const TodoMain = React.createClass({
   render() {
     return (
         <div className={style.container}>
-          <Link to="/admin">Admin</Link>
+          <Link to="/admin"> Admin </Link>
+          <Link to="/minesweeper"> Minesweeper </Link>
           <TodoHeader
             incompleteCount={this.data.incompleteCount}
             hideCompleted={this.props.hideCompleted}
