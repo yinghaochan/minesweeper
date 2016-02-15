@@ -147,7 +147,7 @@
       "beforeColon": false,
       "afterColon": true
     }],
-    "new-cap": [1, { // http://eslint.org/docs/rules/new-cap
+    "new-cap": [0, { // http://eslint.org/docs/rules/new-cap
       "newIsCap": true
     }],
     "no-multiple-empty-lines": [2, { // http://eslint.org/docs/rules/no-multiple-empty-lines
@@ -167,7 +167,7 @@
       "before": false,
       "after": true
     }],
-    "space-after-keywords": 1, // http://eslint.org/docs/rules/space-after-keywords
+    "space-after-keywords": 0, // http://eslint.org/docs/rules/space-after-keywords
     "space-before-blocks": 0, // http://eslint.org/docs/rules/space-before-blocks
     "space-before-function-paren": [0, "never"], // http://eslint.org/docs/rules/space-before-function-paren
     "space-infix-ops": 2, // http://eslint.org/docs/rules/space-infix-ops

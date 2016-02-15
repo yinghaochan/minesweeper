@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 
 const ADD_MINES = 'ADD_MINES'
 const SET_MINE = 'SET_MINE'
+const SET_BOARD = 'SET_BOARD'
 
 // set initial config
 export let config = Immutable.Map({
@@ -37,6 +38,52 @@ const createBoard = function (rows, cols) {
   return Immutable.List(Array(rows)).map(() => row)
 }
 
+export const setBoard = function () {
+  return (dispatch, getState) => {
+    const minesweeper = getState().minesweeper
+    const config = getConfig()
+
+    const tile = Immutable.Map({
+      revealed: false,
+      isBomb: false,
+      nearby: 0,
+      flagged: false,
+    })
+
+    // create matrix filled with tiles
+    let board = 
+    Array.from(new Array(config.get('rows')), () => 
+      Array.from(new Array(config.get('cols')), () => 
+        tile
+        )
+      )
+
+
+    const incrNearby = function(rowNum, colNum) {
+      for (var i = 0; i < 8; i++) {
+        const absRow = rowNum - 1 + parseInt(i/3)
+        const absCol = colNum - 1 + (i%3)
+
+        if(i !== 4 && absRow > -1 && absCol > -1 && absRow < board.length && absCol < board[0].length){
+          board[absRow][absCol] = board[absRow][absCol].update('nearby', (x) => x + 1)
+        }
+      }
+    }
+
+
+    for (var rowNum = 0; rowNum < config.get('rows'); rowNum++) {
+      for (var colNum = 0; colNum < config.get('cols'); colNum++) {
+        if(Math.random() < config.get('mineProbability')){
+          board[rowNum][colNum] = board[rowNum][colNum].set('isBomb', true)
+          incrNearby(rowNum, colNum)
+        }
+      }
+    }
+    dispatch({type: SET_BOARD, payload: Immutable.fromJS(board)})
+  }
+}
+
+window.setBoard = setBoard
 
 export const addMines = function () {
   return (dispatch, getState) => {
@@ -80,19 +127,22 @@ export default function (state = initialState, action) {
   const setMine = function(action) {
     const row = action.row
     const col = action.col
-    if(!state.getIn(['board',row,col,'revealed'])){
-      return state.setIn(['board',row,col,'isBomb'], true)
-                  // .updateIn(['board',row-1,col-1,'nearby'], x => x + 1)
-                  // .updateIn(['board',row-1,col,'nearby'], x => x + 1)
-                  // .updateIn(['board',row-1,col+1,'nearby'], x => x + 1)
-                  // .updateIn(['board',row,col-1,'nearby'], x => x + 1)
-                  // .updateIn(['board',row,col+1,'nearby'], x => x + 1)
-                  // .updateIn(['board',row+1,col-1,'nearby'], x => x + 1)
-                  // .updateIn(['board',row+1,col,'nearby'], x => x + 1)
-                  // .updateIn(['board',row+1,col+1,'nearby'], x => x + 1)
+    const incrBy1 = x => x + 1
+
+    if(!state.getIn(['board', row, col, 'revealed'])){
+      return state.setIn(['board', row, col, 'isBomb'], true)
+                  .updateIn(['board', row-1, col-1, 'nearby'], incrBy1)
+                  .updateIn(['board', row-1, col, 'nearby'], incrBy1)
+                  .updateIn(['board', row-1, col+1, 'nearby'], incrBy1)
+                  .updateIn(['board', row, col-1, 'nearby'], incrBy1)
+                  .updateIn(['board', row, col+1, 'nearby'], incrBy1)
+                  .updateIn(['board', row+1, col-1, 'nearby'], incrBy1)
+                  .updateIn(['board', row+1, col, 'nearby'], incrBy1)
+                  .updateIn(['board', row+1, col+1, 'nearby'], incrBy1)
     }
   }
   switch (action.type) {
+    case SET_BOARD:
     case ADD_MINES:
       return state.set('board', action.payload)
     case SET_MINE:

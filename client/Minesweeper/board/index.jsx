@@ -5,15 +5,17 @@ import Tile from './tile'
 const Row = (props, context) => {
   const renderCols = () => {
     return props.row.map((tile, colNum) => {
-      return (<Tile 
-                    data={tile} 
-                    rowNum={props.rowNum} 
-                    colNum={colNum} 
-                    key={colNum} 
-                    />) 
+      return (
+        <Tile
+          data={tile} 
+          rowNum={props.rowNum} 
+          key={colNum}
+          colNum={colNum} 
+        /> 
+      )
     })
   }
-  return <div> { renderCols() } </div> 
+  return <tr>{ renderCols() }</tr> 
 }
 
 // const Row = React.createClass({
@@ -40,14 +42,18 @@ const Content = React.createClass({
   },
   renderRows(){
     return this.props.board.map((cols, rowNum) => {
-      return <Row row={cols} rowNum={rowNum} key={rowNum}/>
+      return <Row row={cols} rowNum={rowNum} key={rowNum}/> 
     })
   },
   render(){
     // console.log(this.props.board);
     return (
-      <div>
-        { this.renderRows() }   
+      <div className="board">
+        <table> 
+          <tbody> 
+            { this.renderRows() }
+          </tbody> 
+        </table>  
       </div>
       )
   }
