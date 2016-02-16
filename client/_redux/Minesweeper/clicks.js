@@ -1,12 +1,9 @@
-import { REVEAL, FLAG, LOSE } from './types'
+import { REVEAL, FLAG, SET_STATUS, INCR_RESOLVED } from './types'
 import { callAdjacent } from './helpers'
+import { incrResolved } from './game'
 
 const flagTile = function (rowNum, colNum) {
   return {type: FLAG, rowNum, colNum}
-}
-
-const loseGame = function () {
-  return {type: LOSE}
 }
 
 const revealTile = function (rowNum, colNum) {
@@ -16,6 +13,7 @@ const revealTile = function (rowNum, colNum) {
 
     if(!tile.get('revealed')){
 
+      dispatch(incrResolved())
       dispatch({type: REVEAL, rowNum, colNum})
       if(tile.get('nearby') === 0){
         callAdjacent(rowNum, colNum, config.get('rows'), config.get('cols'), 
@@ -33,10 +31,12 @@ export const tileClick = function (rowNum, colNum, tile) {
     if(tile.equals(board.getIn([rowNum, colNum]))){
       if(!tile.get('flagged')){
         dispatch(flagTile(rowNum, colNum))
+        if(tile.get('isBomb')) dispatch(incrResolved())
+        // incrementResolvedIf(dispatch, tile.get('isBomb'))
       } else if(tile.get('isBomb')){
-        dispatch(loseGame())
+        dispatch({type: SET_STATUS, status: 'lost', payload: true})
       } else {
-        dispatch(revealTile(rowNum, colNum))        
+        dispatch(revealTile(rowNum, colNum))
       }
     } else {
       throw new Error('tile select mismatch')

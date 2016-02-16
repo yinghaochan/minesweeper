@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { SET_TOTAL } from './types'
+import { INCR_RESOLVED, SET_TOTAL, RESET_GAME, SET_STATUS } from './types'
 
 export const game = Immutable.Map({
   started: false,
@@ -18,4 +18,18 @@ export const setTotal = function () {
   }
 }
 
+export const resetGame = function () {
+  return {type: RESET_GAME, payload: game}
+}
 
+export const incrResolved = function () {
+  return (dispatch, getState) => {
+    const game = getState().minesweeper.get('game')
+
+    if(game.get('resolved') + 1 === game.get('total')){
+      dispatch({type: SET_STATUS, status: 'won', payload: true})
+    }
+    
+    dispatch({type: INCR_RESOLVED})
+  }
+}

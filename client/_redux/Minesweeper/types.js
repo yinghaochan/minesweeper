@@ -8,6 +8,12 @@ export const FLAG = 'FLAG'
 
 export const REVEAL = 'REVEAL'
 
-export const LOSE = 'LOSE'
+export const SET_STATUS = 'SET_STATUS'
 
 export const SET_TOTAL = 'SET_TOTAL'
+
+export const INCR_RESOLVED = 'INCR_RESOLVED'
+
+export const RESET_GAME = 'RESET_GAME'
+
+export const SET_SIZE = 'SET_SIZE'

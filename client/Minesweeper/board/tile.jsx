@@ -11,6 +11,7 @@ const Tile = React.createClass({
 
   renderTile(){
     const { tile } = this.props
+
     if(this.props.lost && tile.get('isBomb')){
       return <button>x</button>
 
@@ -32,7 +33,7 @@ const Tile = React.createClass({
 
   render(){
     return (
-        <td>
+        <td className="tile">
          {this.renderTile()}
         </td>
       )

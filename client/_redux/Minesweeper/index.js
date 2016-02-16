@@ -1,18 +1,25 @@
 import { initialState } from './board'
-import { SET_TOTAL, FLAG, REVEAL, SET_BOARD, LOSE } from './types'
+import * as types from './types'
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case SET_BOARD:
+    case types.SET_BOARD:
       return state.set('board', action.payload)
-    case FLAG:
+    case types.FLAG:
       return state.setIn(['board', action.rowNum, action.colNum, 'flagged'], true)
-    case REVEAL:
+    case types.REVEAL:
       return state.setIn(['board', action.rowNum, action.colNum, 'revealed'], true)
-    case LOSE:
-      return state.setIn(['game', 'lost'], true)
-    case SET_TOTAL:
+    case types.SET_STATUS:
+      return state.setIn(['game', action.status], action.payload)
+    case types.SET_SIZE:
+      return state.setIn(['config','rows'], parseInt(action.rows))
+                  .setIn(['config','cols'], parseInt(action.cols))
+    case types.SET_TOTAL:
       return state.setIn(['game', 'total'], action.payload)
+    case types.INCR_RESOLVED:
+      return state.updateIn(['game', 'resolved'], (x) => x + 1)
+    case types.RESET_GAME:
+      return state.set('game', action.payload)
     default:
       return state
   }

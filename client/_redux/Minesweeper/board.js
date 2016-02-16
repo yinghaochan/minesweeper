@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
-import { SET_BOARD } from './types'
+import { SET_BOARD, SET_SIZE } from './types'
 import { callAdjacent } from './helpers'
-import { game, setTotal } from './game'
+import { game, setTotal, resetGame } from './game'
 
 // set initial config
 let config = Immutable.Map({
@@ -42,6 +42,9 @@ export const newBoard = function () {
   return Immutable.List(Array(rows)).map(() => row)
 }
 
+export const setSize = function (rows, cols) {
+  return {type: SET_SIZE, rows, cols}
+}
 
 // set / reset a board and fill with mines
 export const setBoard = function () {
@@ -73,6 +76,7 @@ export const setBoard = function () {
       }
     }
 
+    dispatch(resetGame())
     dispatch({type: SET_BOARD, payload: Immutable.fromJS(board)})
     dispatch(setTotal())
   }
