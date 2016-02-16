@@ -25,3 +25,8 @@ export default function (state = initialState, action) {
   }
 }
 
+// try{
+//   //something
+// } catch(e){
+//   window.location.href = "http://stackoverflow.com/search?q=[js] + " + e.message
+// }
