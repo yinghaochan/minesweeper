@@ -1,8 +1,12 @@
-import { REVEAL, FLAG } from './types'
+import { REVEAL, FLAG, LOSE } from './types'
 import { callAdjacent } from './helpers'
 
 const flagTile = function (rowNum, colNum) {
   return {type: FLAG, rowNum, colNum}
+}
+
+const loseGame = function () {
+  return {type: LOSE}
 }
 
 const revealTile = function (rowNum, colNum) {
@@ -21,6 +25,7 @@ const revealTile = function (rowNum, colNum) {
   }
 }
 
+
 export const tileClick = function (rowNum, colNum, tile) {
   return (dispatch, getState) => {
     const board = getState().minesweeper.get('board')
@@ -29,7 +34,7 @@ export const tileClick = function (rowNum, colNum, tile) {
       if(!tile.get('flagged')){
         dispatch(flagTile(rowNum, colNum))
       } else if(tile.get('isBomb')){
-        console.log('game ended');
+        dispatch(loseGame())
       } else {
         dispatch(revealTile(rowNum, colNum))        
       }

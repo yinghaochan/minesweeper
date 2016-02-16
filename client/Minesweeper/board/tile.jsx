@@ -11,8 +11,10 @@ const Tile = React.createClass({
 
   renderTile(){
     const { tile } = this.props
+    if(this.props.lost && tile.get('isBomb')){
+      return <button>x</button>
 
-    if(!tile.get('flagged') && !tile.get('revealed')){
+    } else if(!tile.get('flagged') && !tile.get('revealed')){
       return <button onClick={this.handleClick}>&nbsp;</button> 
 
     } else if(tile.get('flagged') && !tile.get('revealed')){
@@ -25,12 +27,10 @@ const Tile = React.createClass({
       } else {
         return " "
       }
-      return tile.get('isBomb') ? 'x' : tile.get('nearby')
     }
   },
 
   render(){
-    const {tile} = this.props
     return (
         <td>
          {this.renderTile()}
@@ -39,4 +39,10 @@ const Tile = React.createClass({
   }
 }) 
 
-export default connect()(Tile)
+function mapStateToProps (state) {
+  return {
+    lost: state.minesweeper.getIn(['game', 'lost'])
+  }
+}
+
+export default connect(mapStateToProps)(Tile)

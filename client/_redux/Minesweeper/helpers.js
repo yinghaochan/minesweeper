@@ -8,7 +8,7 @@ export const callAdjacent = function(rowNum, colNum, height, width, cb) {
 
     const args = [absRow, absCol].concat([].slice.call(arguments, 5))
 
-    if(i !== 4 && upperBound && lowerBound ){
+    if(i !== 4 && upperBound && lowerBound){
       cb.apply(this, args)
     }
   }
