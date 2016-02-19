@@ -23,7 +23,7 @@ const getConfig = function () {
 const tile = Immutable.Map({
   revealed: false,
   isBomb: false,
-  nearby: 0,
+  nearby: 0, //nearby bombs
   flagged: false,
 })
 
@@ -32,15 +32,6 @@ const tile = Immutable.Map({
 // ACTIONS //
 /////////////
 
-// init a blank board
-export const newBoard = function () {
-  const config = getConfig()
-  const rows = config.get('rows') 
-  const cols = config.get('cols') 
-
-  const row = Immutable.List(Array(cols)).map(() => tile)
-  return Immutable.List(Array(rows)).map(() => row)
-}
 
 export const setSize = function (rows, cols) {
   return {type: SET_SIZE, rows, cols}
@@ -61,6 +52,7 @@ export const setBoard = function () {
         )
       )
 
+    // fn to increment nearby bomb count
     const increment = (row, col) => {
       board[row][col] = board[row][col].update('nearby', (x) => x + 1)
     }
@@ -76,8 +68,13 @@ export const setBoard = function () {
       }
     }
 
+    // reset the game obj
     dispatch(resetGame())
+
+    // add the newly created board to state
     dispatch({type: SET_BOARD, payload: Immutable.fromJS(board)})
+
+    // set the total number of tiles in game
     dispatch(setTotal())
   }
 }
@@ -85,5 +82,5 @@ export const setBoard = function () {
 export const initialState = Immutable.Map({
   game: game,
   config: config,
-  board: newBoard(),
+  board: null,
 })

@@ -2,11 +2,10 @@ import Immutable from 'immutable'
 import { INCR_RESOLVED, SET_TOTAL, RESET_GAME, SET_STATUS } from './types'
 
 export const game = Immutable.Map({
-  started: false,
   lost: false,
   won: false,
-  resolved: 0,
-  total: 0,
+  resolved: 0,     // number of correctly resolved tiles
+  total: 0,        // total number of tiles
 })
 
 export const setTotal = function () {

@@ -32,7 +32,7 @@ const Content = React.createClass({
         <BoardHeader setBoard={this.props.setBoard}/> 
         <table>
           <tbody> 
-            { this.renderRows() }
+            { this.props.board ? this.renderRows() : '' }
           </tbody> 
         </table>  
       </div>
