@@ -1,6 +1,10 @@
-import { REVEAL, FLAG, SET_STATUS, INCR_RESOLVED } from './types'
+import { REVEAL, FLAG, SET_STATUS } from './types'
 import { callAdjacent } from './helpers'
 import { incrResolved } from './game'
+
+//////////////////////
+// INTERNAL ACTIONS //
+//////////////////////
 
 const flagTile = function (rowNum, colNum) {
   return {type: FLAG, rowNum, colNum}
@@ -23,6 +27,9 @@ const revealTile = function (rowNum, colNum) {
   }
 }
 
+/////////////
+// ACTIONS //
+/////////////
 
 export const tileClick = function (rowNum, colNum, tile) {
   return (dispatch, getState) => {

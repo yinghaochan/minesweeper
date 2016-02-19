@@ -6,7 +6,7 @@ export default {
   path: 'minesweeper',
   indexRoute: {
     onEnter: function (nextState, replaceState) {
-      // Redirect to dashboard by default
+      // Redirect to board
       replaceState(null, '/minesweeper/board');
     }
   },

@@ -1,3 +1,4 @@
+// calls cb with all adjacent cells
 export const callAdjacent = function(rowNum, colNum, height, width, cb) {
   for (var i = 0; i < 9; i++) {
     const absRow = rowNum - 1 + parseInt(i / 3, 10)

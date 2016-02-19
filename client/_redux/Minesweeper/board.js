@@ -3,6 +3,10 @@ import { SET_BOARD, SET_CONFIG } from './types'
 import { callAdjacent } from './helpers'
 import { game, setTotal, resetGame } from './game'
 
+////////////////
+// BOARD INIT //
+////////////////
+
 // set initial config
 let config = Immutable.Map({
   rows: 20,
@@ -16,6 +20,12 @@ const tile = Immutable.Map({
   isBomb: false,
   nearby: 0, //nearby bombs
   flagged: false,
+})
+
+export const initialState = Immutable.Map({
+  game: game,
+  config: config,
+  board: null,
 })
 
 
@@ -73,9 +83,3 @@ export const setBoard = function () {
     dispatch(setTotal())
   }
 }
-
-export const initialState = Immutable.Map({
-  game: game,
-  config: config,
-  board: null,
-})

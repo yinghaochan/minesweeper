@@ -35,6 +35,7 @@ export default function (state = initialState, action) {
    }
 
   } catch(e){
+    // the true JS error handler
     window.location.href = 'http://stackoverflow.com/search?q=[js] + ' + e.message
   }
 }

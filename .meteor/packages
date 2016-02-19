@@ -26,5 +26,3 @@ accounts-password
 reactrouter:react-router-ssr
 nfl:react-helmet
 msavin:mongol
-autopublish
-insecure
