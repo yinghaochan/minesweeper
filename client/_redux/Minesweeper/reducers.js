@@ -32,7 +32,7 @@ export default function (state = initialState, action) {
 
       default:
         return state      
-   }
+    }
 
   } catch(e){
     // the true JS error handler

@@ -8,7 +8,7 @@ const Tile = React.createClass({
 
     // disable the grid if you've lost
     // feel free to win then set off a bomb
-    return this.props.lost ? null : dispatch(tileClick(rowNum, colNum, tile))
+    return (this.props.lost || this.props.won) ? null : dispatch(tileClick(rowNum, colNum, tile))
   },
 
   renderTile(){
