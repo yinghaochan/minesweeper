@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { SET_BOARD, SET_SIZE } from './types'
+import { SET_BOARD, SET_CONFIG } from './types'
 import { callAdjacent } from './helpers'
 import { game, setTotal, resetGame } from './game'
 
@@ -10,16 +10,7 @@ let config = Immutable.Map({
   mineProbability: 0.14,
 })
 
-
-// get dimensions from store if possible
-const getConfig = function () {
-  if(Meteor.store){
-    return Meteor.store.getState().minesweeper.get('config')
-  } else {
-    return config
-  }
-}
-
+// define state for a tile
 const tile = Immutable.Map({
   revealed: false,
   isBomb: false,
@@ -33,8 +24,8 @@ const tile = Immutable.Map({
 /////////////
 
 
-export const setSize = function (rows, cols) {
-  return {type: SET_SIZE, rows, cols}
+export const setConfig = function (rows, cols, prob) {
+  return {type: SET_CONFIG, rows, cols, prob}
 }
 
 // set / reset a board and fill with mines
@@ -57,12 +48,16 @@ export const setBoard = function () {
       board[row][col] = board[row][col].update('nearby', (x) => x + 1)
     }
 
-    // set bombs based on mineProbability 
     for (var rowNum = 0; rowNum < config.get('rows'); rowNum++) {
       for (var colNum = 0; colNum < config.get('cols'); colNum++) {
-        if(Math.random() < config.get('mineProbability') && !board[rowNum][colNum].get('revealed')){
+
+        // set Bomb based on probability
+        if(Math.random() < config.get('mineProbability')){
+
+          // set the bomb
           board[rowNum][colNum] = board[rowNum][colNum].set('isBomb', true)
 
+          // increment the nearby count on tiles that are adjacent
           callAdjacent(rowNum, colNum, config.get('rows'), config.get('cols'), increment)
         }
       }

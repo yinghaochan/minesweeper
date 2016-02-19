@@ -16,4 +16,4 @@ export const INCR_RESOLVED = 'INCR_RESOLVED'
 
 export const RESET_GAME = 'RESET_GAME'
 
-export const SET_SIZE = 'SET_SIZE'
+export const SET_CONFIG = 'SET_CONFIG'

@@ -27,6 +27,7 @@ export const incrResolved = function () {
 
     if(game.get('resolved') + 1 === game.get('total')){
       dispatch({type: SET_STATUS, status: 'won', payload: true})
+      alert('YOU WIN!!!')
     }
     
     dispatch({type: INCR_RESOLVED})

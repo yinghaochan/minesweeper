@@ -1,40 +1,55 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setBoard, setSize } from 'client/_redux/Minesweeper/board'
+import { setBoard, setConfig } from 'client/_redux/Minesweeper/board'
 
 const boardHeader = React.createClass({
   componentDidMount(){
     this.props.setBoard()
   },
+
   handleSubmit(e){
     e.preventDefault()
+    const el = e.target
 
-    this.props.setSize(e.target.rows.value, e.target.cols.value)
+    this.props.setConfig(el.rows.value, el.cols.value, el.prob.value)
+
     this.props.setBoard()
 
   },
+
+  renderConfig(){
+    const { config } = this.props
+    const inputStyle = {width: '30px'}
+
+    return (
+      <form>
+        <span>Change Board Size: </span>
+        <input name="rows" type="text" style={inputStyle} defaultValue={config.get('rows')}/>
+         <span> x </span> 
+        <input name="cols" type="text" style={inputStyle} defaultValue={config.get('cols')}/>
+        <span>  Mine Probability: </span> 
+        <input name="prob" type="text" style={inputStyle} defaultValue={config.get('mineProbability')}/>
+        <input type="submit" />
+      </form>
+      )
+  },
+
   render(){
-    const { config, game } = this.props
-    const inputStyle = {width: '20px'}
+    const { game } = this.props
+
     return (
         <div>
           <table>
             <tbody>
               <tr className="form" onSubmit={this.handleSubmit}>
                 <td>
-                  <form>
-                    <span>Change Board Size: </span>
-                    <input name="rows"type="text" style={inputStyle} defaultValue={config.get('rows')}/>
-                     <span> x </span> 
-                    <input name="cols"type="text" style={inputStyle} defaultValue={config.get('cols')}/>
-                    <input type="submit" />
-                  </form>
+                  { this.renderConfig() }
                 </td>
               </tr>
               <tr>
-                <td onClick={this.props.setBoard}>Reset</td>
-                <td>{ game.get('won') ? 'YOU WIN!': ''}</td>
-                <td>{ game.get('lost') ? 'YOU LOSE!': ''}</td>
+                <td><button onClick={this.props.setBoard}> Reset Game </button></td>
+                <td>{ game.get('won') ? 'YOU WON!' : '' }</td>
+                <td>{ game.get('lost') ? 'YOU LOST!' : '' }</td>
               </tr>
             </tbody>      
           </table>
@@ -43,7 +58,6 @@ const boardHeader = React.createClass({
   }
 })
 
-
 function mapStateToProps (state){
   return {
     game: state.minesweeper.get('game'),
@@ -51,5 +65,4 @@ function mapStateToProps (state){
   }
 }
 
-
-export default connect(mapStateToProps, {setBoard, setSize})(boardHeader)
+export default connect(mapStateToProps, {setBoard, setConfig})(boardHeader)

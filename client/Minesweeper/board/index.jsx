@@ -3,29 +3,23 @@ import { connect } from 'react-redux'
 import Tile from './tile'
 import BoardHeader from './boardHeader'
 
-const Row = (props, context) => {
-  const renderCols = () => {
-    return props.row.map((tile, colNum) => {
-      return (
-        <Tile
-          tile={tile} 
-          rowNum={props.rowNum} 
-          key={colNum}
-          colNum={colNum} 
-        /> 
-      )
-    })
-  }
-  return <tr className="tile">{ renderCols() }</tr> 
-}
-
-
-const Content = React.createClass({
-  renderRows(){
-    return this.props.board.map((cols, rowNum) => {
-      return <Row row={cols} rowNum={rowNum} key={rowNum}/> 
+const Grid = React.createClass({
+  renderTiles(rowData, rowNum){
+    return rowData.map((tile, colNum) => {
+      return <Tile tile={tile} rowNum={rowNum} colNum={colNum} key={colNum} />
     })
   },
+
+  renderRows(){
+    return this.props.board.map((rowData, rowNum) => {
+      return (
+        <tr className="tile" key={rowNum}> 
+          { this.renderTiles(rowData, rowNum) } 
+        </tr>
+        )
+    })
+  },
+
   render(){
     return (
       <div className="board">
@@ -46,4 +40,4 @@ function mapStateToProps (state){
   }
 }
 
-export default connect(mapStateToProps)(Content)
+export default connect(mapStateToProps)(Grid)

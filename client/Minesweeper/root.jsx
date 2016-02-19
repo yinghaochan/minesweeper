@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 
 import style from './css/Sweep.import.css';
 
-export default class AdminApp extends Component {
+export default class MineSweeper extends Component {
   static propTypes = {
     children: PropTypes.any.isRequired
   };

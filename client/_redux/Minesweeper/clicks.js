@@ -35,6 +35,7 @@ export const tileClick = function (rowNum, colNum, tile) {
         // incrementResolvedIf(dispatch, tile.get('isBomb'))
       } else if(tile.get('isBomb')){
         dispatch({type: SET_STATUS, status: 'lost', payload: true})
+        alert('YOU LOST!!!')
       } else {
         dispatch(revealTile(rowNum, colNum))
       }

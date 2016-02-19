@@ -6,37 +6,36 @@ const Tile = React.createClass({
   handleClick(){
     const {dispatch, rowNum, colNum, tile} = this.props
 
-    return dispatch(tileClick(rowNum, colNum, tile))
+    // disable the grid if you've lost
+    // feel free to win then set off a bomb
+    return this.props.lost ? null : dispatch(tileClick(rowNum, colNum, tile))
   },
 
   renderTile(){
-    const { tile } = this.props
+    const { tile, lost } = this.props
+    const flagged = tile.get('flagged')
+    const revealed = tile.get('revealed')
 
-    if(this.props.lost && tile.get('isBomb')){
+    if(lost && tile.get('isBomb')){
       return <button>x</button>
 
-    } else if(!tile.get('flagged') && !tile.get('revealed')){
+    } else if(!flagged && !revealed){
       return <button onClick={this.handleClick}>&nbsp;</button> 
 
-    } else if(tile.get('flagged') && !tile.get('revealed')){
+    } else if(flagged && !revealed){
       return <button onClick={this.handleClick}>!!</button>
 
-    } else if(tile.get('revealed')){
+    } else if(revealed){
       const nearBy = tile.get('nearby')
-      if(nearBy){
-        return nearBy
-      } else {
-        return " "
-      }
+
+      if(nearBy) return nearBy
+      
+      return ''
     }
   },
 
   render(){
-    return (
-        <td className="tile">
-         {this.renderTile()}
-        </td>
-      )
+    return <td className="tile">{ this.renderTile() }</td>
   }
 }) 
 
