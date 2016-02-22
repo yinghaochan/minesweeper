@@ -1,12 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Tile from './tile'
+import Square from './square'
 import BoardHeader from './boardHeader'
+import { tileClick } from 'client/_redux/Minesweeper/clicks'
+
 
 const Grid = React.createClass({
   renderTiles(rowData, rowNum){
     return rowData.map((tile, colNum) => {
-      return <Tile tile={tile} rowNum={rowNum} colNum={colNum} key={colNum} />
+      return (
+        <Square 
+          tile={tile} 
+          rowNum={rowNum} 
+          colNum={colNum} 
+          key={colNum}
+          tileClick={this.props.tileClick}
+          game={this.props.game} 
+        />
+      )
     })
   },
 
@@ -23,7 +35,7 @@ const Grid = React.createClass({
   render(){
     return (
       <div className="board">
-        <BoardHeader setBoard={this.props.setBoard}/> 
+        <BoardHeader setBoard={this.props.setBoard} /> 
         <table>
           <tbody> 
             { this.props.board ? this.renderRows() : '' }
@@ -37,7 +49,9 @@ const Grid = React.createClass({
 function mapStateToProps (state){
   return {
     board: state.minesweeper.get('board'),
+    game: state.minesweeper.get('game'),
+    config: state.minesweeper.get('config'),
   }
 }
 
-export default connect(mapStateToProps)(Grid)
+export default connect(mapStateToProps, {tileClick})(Grid)

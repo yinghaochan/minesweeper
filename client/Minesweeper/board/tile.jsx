@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { tileClick } from 'client/_redux/Minesweeper/clicks'
 
 const Tile = React.createClass({
+
   handleClick(){
     const {dispatch, rowNum, colNum, tile} = this.props
 
-    // disable the grid if you've lost
-    // feel free to win then set off a bomb
+    // disable the grid if you've lost / won
     return (this.props.lost || this.props.won) ? null : dispatch(tileClick(rowNum, colNum, tile))
   },
 
@@ -41,7 +41,8 @@ const Tile = React.createClass({
 
 function mapStateToProps (state) {
   return {
-    lost: state.minesweeper.getIn(['game', 'lost'])
+    lost: state.minesweeper.getIn(['game', 'lost']),
+    won: state.minesweeper.getIn(['game', 'won']),
   }
 }
 
