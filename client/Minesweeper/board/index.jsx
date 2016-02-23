@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { reset, setFlag, setReveal } from 'client/_redux/Sweep'
+import { reset, tileClick } from 'client/_redux/Sweep'
 import Tile from './tile'
 import BoardHeader from './boardHeader'
 
@@ -26,8 +26,7 @@ const Game = React.createClass({
         <Tile 
           tile={tile} 
           key={colNum}
-          setFlag={this.props.setFlag}
-          setReveal={this.props.setReveal}
+          tileClick={this.props.tileClick}
           game={this.props.game} 
         />
       )
@@ -70,4 +69,4 @@ function mapStateToProps (state){
   }
 }
 
-export default connect(mapStateToProps, { reset, setFlag, setReveal })(Game)
+export default connect(mapStateToProps, { reset, tileClick })(Game)

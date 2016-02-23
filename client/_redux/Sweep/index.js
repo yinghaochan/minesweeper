@@ -98,21 +98,10 @@ const generateBoard = (tile, rows, cols, mineProbability) => {
 /////////////
 
 export const reset = (rows, cols, mineProbability) => {
-  const cfg = {
-    rows: parseInt(rows, 10), 
-    cols: parseInt(cols, 10), 
-    mineProbability: parseFloat(mineProbability),
-  }
-  const board = generateBoard(tile, cfg.rows, cfg.cols, cfg.mineProbability)
+  const cfg = {rows, cols, mineProbability}
+  
+  const board = generateBoard(tile, rows, cols, mineProbability)
   return {type: types.RESET, config: cfg, payload: board}
-}
-
-export const setFlag = (rowNum, colNum) => {
-  return {type: types.FLAG, rowNum, colNum}
-}
-
-export const setReveal = (rowNum, colNum) => {
-  return {type: types.REVEAL, rowNum, colNum}
 }
 
 export const tileClick = (rowNum, colNum) => {
@@ -182,8 +171,14 @@ export default function (state = initialState, action) {
     }
   }
 
+  // universal tileClick handler
   const tileClick = (rowNum, colNum) => {
     const target = nextState.board[rowNum][colNum]
+
+    // do nothing if game has ended
+    if(state.game.won || state.game.lost){
+      return state
+    }
 
     if(!target.flagged){
       target.flagged = true
@@ -201,14 +196,6 @@ export default function (state = initialState, action) {
 
     case types.TILE_CLICK:
       return tileClick(action.rowNum, action.colNum)
-
-    case types.FLAG:
-      nextState.board[action.rowNum][action.colNum].flagged = true
-      return nextState
-
-    case types.REVEAL:
-      revealTiles(null, action.rowNum, action.colNum, nextState.board)
-      return nextState
 
     default:
       return state

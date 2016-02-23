@@ -13,8 +13,13 @@ const boardHeader = React.createClass({
   handleSubmit(e){
     e.preventDefault()
     const el = e.target
+    const newRows = parseInt(el.rows.value, 10)
+    const newCols = parseInt(el.cols.value, 10)
+    const newProb = parseFloat(el.prob.value)
 
-    this.props.reset(el.rows.value, el.cols.value, el.prob.value)
+    if(newRows && newCols && newProb){
+      this.props.reset(newRows, newCols, newProb)
+    }
   },
 
   renderConfig(){
