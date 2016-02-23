@@ -7,12 +7,11 @@ import BoardHeader from './boardHeader'
 
 const Game = React.createClass({
   propTypes: {
-    board: React.PropTypes.array.isRequired,
+    board: React.PropTypes.array,
     game: React.PropTypes.object.isRequired,
     config: React.PropTypes.object.isRequired,
     reset: React.PropTypes.func.isRequired,
-    setFlag: React.PropTypes.func.isRequired,
-    setReveal: React.PropTypes.func.isRequired,
+    tileClick: React.PropTypes.func.isRequired,
   },
 
   componentWillMount(){
@@ -20,7 +19,7 @@ const Game = React.createClass({
     this.props.reset(cfg.rows, cfg.cols, cfg.mineProbability)
   },
 
-  renderTiles(rowData, rowNum){
+  renderTiles(rowData){
     return rowData.map((tile, colNum) => {
       return (
         <Tile 
@@ -37,7 +36,7 @@ const Game = React.createClass({
     return this.props.board.map((rowData, rowNum) => {
       return (
         <tr key={rowNum}> 
-          { this.renderTiles(rowData, rowNum) } 
+          { this.renderTiles(rowData) } 
         </tr>
         )
     })

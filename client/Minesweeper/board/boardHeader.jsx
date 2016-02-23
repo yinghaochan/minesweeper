@@ -1,7 +1,7 @@
 import React from 'react'
 
-const inputStyle = {width: '30px'}
-const formStyle = {height: '50px'}
+import style from '../css/Sweep.import.css'
+
 
 const boardHeader = React.createClass({
   propTypes: {
@@ -26,32 +26,39 @@ const boardHeader = React.createClass({
     const { config } = this.props
 
     return (
-      <form style={formStyle}>
-        <span>Change Board Size: </span>
-        <input name="rows" type="text" style={inputStyle} defaultValue={config.rows}/>
-         <span> x </span> 
-        <input name="cols" type="text" style={inputStyle} defaultValue={config.cols}/>
+      <form className={style.config}>
+        <span>Board Size: </span>
+        <input name="rows" type="text" defaultValue={config.rows}/>
+        <span> x </span> 
+        <input name="cols" type="text" defaultValue={config.cols}/>
         <span>  Mine Probability: </span> 
-        <input name="prob" type="text" style={inputStyle} defaultValue={config.mineProbability}/>
+        <input name="prob" type="text" defaultValue={config.mineProbability}/>
         <input type="submit" value="Reset"/>
       </form>
       )
   },
 
-  render(){
+  renderStatus(){
     const { game } = this.props
+    if(game.won){
+      return 'YOU WIN'
+    } else if(game.lost){
+      return 'YOU LOSE'
+    } else {
+      return 'Click once to flag, twice to reveal.'
+    }
+  },
 
+  render(){
     return (
         <div>
           <table>
             <tbody>
               <tr className="form" onSubmit={this.handleSubmit}>
-                <td>
-                  { this.renderConfig() }
-                </td>
+                <td>{ this.renderConfig() }</td>
               </tr>
               <tr>
-                <td>{ game.won ? 'YOU WON!' : '' }{ game.lost ? 'YOU LOST!' : '' }</td>
+                <td>{ this.renderStatus() }</td>
               </tr>
             </tbody>      
           </table>

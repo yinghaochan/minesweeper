@@ -20,3 +20,10 @@
   vertical-align: middle;
 }
 
+.config {
+  height: 50px;
+}
+
+.config input[type="text"] {
+  width: 25px;
+}

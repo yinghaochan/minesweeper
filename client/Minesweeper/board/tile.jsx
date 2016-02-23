@@ -6,8 +6,7 @@ const Tile = React.createClass({
   propTypes: {
     tile: React.PropTypes.object.isRequired,
     game: React.PropTypes.object.isRequired,
-    setFlag: React.PropTypes.func.isRequired,
-    setReveal: React.PropTypes.func.isRequired,
+    tileClick: React.PropTypes.func.isRequired,
   },
 
   renderTile(){
@@ -15,7 +14,7 @@ const Tile = React.createClass({
     const { flagged, revealed, bomb, adjacentBombs, rowNum, colNum } = this.props.tile
     const tileClick = this.props.tileClick.bind(this, rowNum, colNum)
 
-    if((lost || won ) && bomb){
+    if((lost || won) && bomb){
       return <button>X</button>
 
     } else if(!revealed){

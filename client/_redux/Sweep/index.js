@@ -46,6 +46,7 @@ const tile = {
 // HELPER FUNCTIONS //
 //////////////////////
 
+// run a callback on all adjacent cells
 const callAdjacentCells = (board, rowNum, colNum, cb) => {
   for (var i = 0; i < 9; i++) {
 
@@ -91,7 +92,16 @@ const generateBoard = (tile, rows, cols, mineProbability) => {
   
   return board
 }
- 
+
+// count the number of mines in a board
+  const countMines = (board) => {
+    return board.reduce((memo, row) => {
+      return memo + row.reduce((memo, tile) => {
+        return memo + (tile.bomb ? 1 : 0)
+      }, 0)
+    }, 0)
+  }
+  
 
 /////////////
 // ACTIONS //
@@ -119,18 +129,14 @@ const initialState = {
   board: null,
 }
 
+
 export default function (state = initialState, action) {
+
   // clone deeply because Object.assign is shallow
   const nextState = action.type ? _.cloneDeep(state) : state
 
-  const countMines = (board) => {
-    return board.reduce((memo, row) => {
-      return memo + row.reduce((memo, tile) => {
-        return memo + (tile.bomb ? 1 : 0)
-      }, 0)
-    }, 0)
-  }
-  
+
+  // reset the game object
   const resetGame = (board) => {
     const newGame = {
       won: false,
@@ -142,6 +148,7 @@ export default function (state = initialState, action) {
     return newGame
   }
 
+
   // increment cleared counter and check for win
   const incrementCleared = () => {
     nextState.game.cleared++
@@ -151,6 +158,7 @@ export default function (state = initialState, action) {
       nextState.game.won = true
     }
   }
+
 
   // recursively reveal tiles if no adjacentBombs
   const revealTiles = (target, rowNum, colNum, board) => {
@@ -167,9 +175,9 @@ export default function (state = initialState, action) {
       if(target.adjacentBombs === 0){
         callAdjacentCells(board, rowNum, colNum, revealTiles) 
       }
-      
     }
   }
+
 
   // universal tileClick handler
   const tileClick = (rowNum, colNum) => {
@@ -185,12 +193,12 @@ export default function (state = initialState, action) {
     } else {
       revealTiles(null, rowNum, colNum, nextState.board)
     }
-
+    
     return nextState
   }
 
-  switch (action.type) {
 
+  switch (action.type) {
     case types.RESET:
       return {config: action.config, board: action.payload, game: resetGame(action.payload)}
 
