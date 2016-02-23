@@ -5,13 +5,18 @@
   background: white;
 }
 
-:global td.tile {
+.tile {
   width: 20px;
-  height: 20px;  
-  padding: 0px 1px 0px 1px;
+  height: 20px; 
+  padding: 0px 0px 0px 0px;
   text-align: center;
 }
 
-:global .form {
-  height: 50px;  
+.tile button {
+  width: 20px;
+  height: 20px; 
+  padding: 0;
+  border: 0;
+  vertical-align: middle;
 }
+

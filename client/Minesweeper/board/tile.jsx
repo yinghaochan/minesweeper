@@ -1,23 +1,34 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { tileClick } from 'client/_redux/Minesweeper/clicks'
+
+import style from '../css/Sweep.import.css'
 
 const Tile = React.createClass({
+  propTypes: {
+    tile: React.PropTypes.object.isRequired,
+    game: React.PropTypes.object.isRequired,
+    setFlag: React.PropTypes.func.isRequired,
+    setReveal: React.PropTypes.func.isRequired,
+  },
 
   handleClick(){
-    const {dispatch, rowNum, colNum, tile} = this.props
+    const {lost, won, setFlag, setReveal } = this.props
+    const { flagged, rowNum, colNum } = this.props.tile
 
-    // disable the grid if you've lost / won
-    return (this.props.lost || this.props.won) ? null : dispatch(tileClick(rowNum, colNum, tile))
+    if(!lost && !won){
+      if(!flagged){
+        setFlag(rowNum, colNum)
+      } else{
+        setReveal(rowNum, colNum)
+      }
+    }
   },
 
   renderTile(){
-    const { tile, lost } = this.props
-    const flagged = tile.get('flagged')
-    const revealed = tile.get('revealed')
+    const { won, lost } = this.props.game
+    const { flagged, revealed, bomb, adjacentBombs } = this.props.tile
 
-    if(lost && tile.get('isBomb')){
-      return <button>x</button>
+    if((lost || won ) && bomb){
+      return <button>X</button>
 
     } else if(!flagged && !revealed){
       return <button onClick={this.handleClick}>&nbsp;</button> 
@@ -25,25 +36,20 @@ const Tile = React.createClass({
     } else if(flagged && !revealed){
       return <button onClick={this.handleClick}>!!</button>
 
-    } else if(revealed){
-      const nearBy = tile.get('nearby')
-
-      if(nearBy) return nearBy
+    } else if(revealed && adjacentBombs){
+      return adjacentBombs
       
+    } else {
       return ''
+        
     }
+    
   },
 
   render(){
-    return <td className="tile">{ this.renderTile() }</td>
+    return <td className={style.tile}>{ this.renderTile() }</td>
   }
 }) 
 
-function mapStateToProps (state) {
-  return {
-    lost: state.minesweeper.getIn(['game', 'lost']),
-    won: state.minesweeper.getIn(['game', 'won']),
-  }
-}
 
-export default connect(mapStateToProps)(Tile)
+export default Tile

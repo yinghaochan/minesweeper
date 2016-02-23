@@ -17,9 +17,9 @@
   "css-loader": "^0.23.0",
   "extract-text-webpack-plugin": "^0.9.1",
 
-  "react-transform-hmr": "^1.0.0",
-  "react-transform-catch-errors": "^1.0.0",
-  "redbox-react": "^1.2.0",
+  "react-transform-hmr": "1.0.0",
+  "react-transform-catch-errors": "1.0.0",
+  "redbox-react": "1.2.0",
 
   "babel-eslint": "^4.1.6",
   "eslint": "^1.10.3",

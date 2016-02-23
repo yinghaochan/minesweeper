@@ -1,21 +1,33 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { reset, setFlag, setReveal } from 'client/_redux/Sweep'
 import Tile from './tile'
-// import Square from './square'
 import BoardHeader from './boardHeader'
-import { tileClick } from 'client/_redux/Minesweeper/clicks'
 
 
-const Grid = React.createClass({
+const Game = React.createClass({
+  propTypes: {
+    board: React.PropTypes.array.isRequired,
+    game: React.PropTypes.object.isRequired,
+    config: React.PropTypes.object.isRequired,
+    reset: React.PropTypes.func.isRequired,
+    setFlag: React.PropTypes.func.isRequired,
+    setReveal: React.PropTypes.func.isRequired,
+  },
+
+  componentWillMount(){
+    const cfg = this.props.config
+    this.props.reset(cfg.rows, cfg.cols, cfg.mineProbability)
+  },
+
   renderTiles(rowData, rowNum){
     return rowData.map((tile, colNum) => {
       return (
         <Tile 
           tile={tile} 
-          rowNum={rowNum} 
-          colNum={colNum} 
           key={colNum}
-          tileClick={this.props.tileClick}
+          setFlag={this.props.setFlag}
+          setReveal={this.props.setReveal}
           game={this.props.game} 
         />
       )
@@ -25,7 +37,7 @@ const Grid = React.createClass({
   renderRows(){
     return this.props.board.map((rowData, rowNum) => {
       return (
-        <tr className="tile" key={rowNum}> 
+        <tr key={rowNum}> 
           { this.renderTiles(rowData, rowNum) } 
         </tr>
         )
@@ -35,10 +47,14 @@ const Grid = React.createClass({
   render(){
     return (
       <div className="board">
-        <BoardHeader setBoard={this.props.setBoard} /> 
+        <BoardHeader 
+          game={this.props.game} 
+          config={this.props.config} 
+          reset={this.props.reset} 
+        /> 
         <table>
           <tbody> 
-            { this.props.board ? this.renderRows() : '' }
+            { this.renderRows() }
           </tbody> 
         </table>  
       </div>
@@ -48,10 +64,10 @@ const Grid = React.createClass({
 
 function mapStateToProps (state){
   return {
-    board: state.minesweeper.get('board'),
-    game: state.minesweeper.get('game'),
-    config: state.minesweeper.get('config'),
+    board: state.sweep.board,
+    game: state.sweep.game,
+    config: state.sweep.config,
   }
 }
 
-export default connect(mapStateToProps, {tileClick})(Grid)
+export default connect(mapStateToProps, { reset, setFlag, setReveal })(Game)
