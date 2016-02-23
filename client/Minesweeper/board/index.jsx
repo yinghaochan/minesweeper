@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Tile from './tile'
-import Square from './square'
+// import Square from './square'
 import BoardHeader from './boardHeader'
 import { tileClick } from 'client/_redux/Minesweeper/clicks'
 
@@ -10,7 +10,7 @@ const Grid = React.createClass({
   renderTiles(rowData, rowNum){
     return rowData.map((tile, colNum) => {
       return (
-        <Square 
+        <Tile 
           tile={tile} 
           rowNum={rowNum} 
           colNum={colNum} 
