@@ -8,6 +8,7 @@ const types = {
   RESET: 'RESET',
   FLAG: 'FLAG',
   REVEAL: 'REVEAL',
+  TILE_CLICK: 'TILE_CLICK',
 }
 
 
@@ -114,6 +115,10 @@ export const setReveal = (rowNum, colNum) => {
   return {type: types.REVEAL, rowNum, colNum}
 }
 
+export const tileClick = (rowNum, colNum) => {
+  return {type: types.TILE_CLICK, rowNum, colNum}
+}
+
 
 //////////////
 // REDUCERS //
@@ -122,7 +127,7 @@ export const setReveal = (rowNum, colNum) => {
 const initialState = {
   game: Object.assign({}, game),
   config: Object.assign({}, config),
-  board: generateBoard(tile, config.rows, config.cols, config.mineProbability),
+  board: null,
 }
 
 export default function (state = initialState, action) {
@@ -148,11 +153,11 @@ export default function (state = initialState, action) {
     return newGame
   }
 
+  // increment cleared counter and check for win
   const incrementCleared = () => {
     nextState.game.cleared++
     const numTiles = nextState.config.rows * nextState.config.rows
 
-    // check for win
     if(nextState.game.cleared === numTiles - nextState.game.mines){
       nextState.game.won = true
     }
@@ -177,10 +182,25 @@ export default function (state = initialState, action) {
     }
   }
 
+  const tileClick = (rowNum, colNum) => {
+    const target = nextState.board[rowNum][colNum]
+
+    if(!target.flagged){
+      target.flagged = true
+    } else {
+      revealTiles(null, rowNum, colNum, nextState.board)
+    }
+
+    return nextState
+  }
+
   switch (action.type) {
 
     case types.RESET:
       return {config: action.config, board: action.payload, game: resetGame(action.payload)}
+
+    case types.TILE_CLICK:
+      return tileClick(action.rowNum, action.colNum)
 
     case types.FLAG:
       nextState.board[action.rowNum][action.colNum].flagged = true

@@ -54,7 +54,7 @@ const Game = React.createClass({
         /> 
         <table>
           <tbody> 
-            { this.renderRows() }
+            { this.props.board ? this.renderRows() : '' }
           </tbody> 
         </table>  
       </div>
