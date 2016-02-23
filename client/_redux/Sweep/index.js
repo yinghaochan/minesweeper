@@ -6,8 +6,6 @@ import _ from 'lodash'
 
 const types = {
   RESET: 'RESET',
-  FLAG: 'FLAG',
-  REVEAL: 'REVEAL',
   TILE_CLICK: 'TILE_CLICK',
 }
 
@@ -20,7 +18,7 @@ const types = {
 const game = {
   lost: false,
   won: false,
-  cleared: 0,     // number of correctly cleared cells
+  cleared: 0,     
   mines: 0,        
 }
 
@@ -94,13 +92,13 @@ const generateBoard = (tile, rows, cols, mineProbability) => {
 }
 
 // count the number of mines in a board
-  const countMines = (board) => {
-    return board.reduce((memo, row) => {
-      return memo + row.reduce((memo, tile) => {
-        return memo + (tile.bomb ? 1 : 0)
-      }, 0)
+const countMines = (board) => {
+  return board.reduce((memo, row) => {
+    return memo + row.reduce((memo, tile) => {
+      return memo + (tile.bomb ? 1 : 0)
     }, 0)
-  }
+  }, 0)
+}
   
 
 /////////////
