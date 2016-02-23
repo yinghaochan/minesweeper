@@ -18,7 +18,7 @@ export const storeBuilder = (initialState, history) => {
     throw new Error('Running prod storeBuilder under the wrong process.env')
   } else {
     finalCreateStore = applyMiddleware(historyMiddleware, thunk)(createStore)
-    store = finalCreateStore(reducers)
+    store = finalCreateStore(reducers, initialState)
   }
 
   historyMiddleware.listenForReplays(store)

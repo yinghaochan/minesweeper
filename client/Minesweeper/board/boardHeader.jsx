@@ -1,55 +1,64 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { setBoard, setConfig } from 'client/_redux/Minesweeper/board'
+
+import style from '../css/Sweep.import.css'
+
 
 const boardHeader = React.createClass({
-  componentDidMount(){
-    this.props.setBoard()
+  propTypes: {
+    game: React.PropTypes.object.isRequired,
+    config: React.PropTypes.object.isRequired,
+    reset: React.PropTypes.func.isRequired,
   },
 
   handleSubmit(e){
     e.preventDefault()
     const el = e.target
+    const newRows = parseInt(el.rows.value, 10)
+    const newCols = parseInt(el.cols.value, 10)
+    const newProb = parseFloat(el.prob.value)
 
-    this.props.setConfig(el.rows.value, el.cols.value, el.prob.value)
-
-    this.props.setBoard()
-
+    if(newRows && newCols && newProb){
+      this.props.reset(newRows, newCols, newProb)
+    }
   },
 
   renderConfig(){
     const { config } = this.props
-    const inputStyle = {width: '30px'}
 
     return (
-      <form>
-        <span>Change Board Size: </span>
-        <input name="rows" type="text" style={inputStyle} defaultValue={config.get('rows')}/>
-         <span> x </span> 
-        <input name="cols" type="text" style={inputStyle} defaultValue={config.get('cols')}/>
+      <form className={style.config}>
+        <span>Board Size: </span>
+        <input name="rows" type="text" defaultValue={config.rows}/>
+        <span> x </span> 
+        <input name="cols" type="text" defaultValue={config.cols}/>
         <span>  Mine Probability: </span> 
-        <input name="prob" type="text" style={inputStyle} defaultValue={config.get('mineProbability')}/>
-        <input type="submit" />
+        <input name="prob" type="text" defaultValue={config.mineProbability}/>
+        <input type="submit" value="Reset"/>
       </form>
       )
   },
 
-  render(){
+  renderStatus(){
     const { game } = this.props
+    if(game.won){
+      return 'YOU WIN'
+    } else if(game.lost){
+      return 'YOU LOSE'
+    } else {
+      return 'Click once to flag, twice to reveal.'
+    }
+  },
 
+  render(){
     return (
         <div>
           <table>
             <tbody>
               <tr className="form" onSubmit={this.handleSubmit}>
-                <td>
-                  { this.renderConfig() }
-                </td>
+                <td>{ this.renderConfig() }</td>
               </tr>
               <tr>
-                <td><button onClick={this.props.setBoard}> Reset Game </button></td>
-                <td>{ game.get('won') ? 'YOU WON!' : '' }</td>
-                <td>{ game.get('lost') ? 'YOU LOST!' : '' }</td>
+                <td>{ this.renderStatus() }</td>
               </tr>
             </tbody>      
           </table>
@@ -58,11 +67,4 @@ const boardHeader = React.createClass({
   }
 })
 
-function mapStateToProps (state){
-  return {
-    game: state.minesweeper.get('game'),
-    config: state.minesweeper.get('config'),
-  }
-}
-
-export default connect(mapStateToProps, {setBoard, setConfig})(boardHeader)
+export default boardHeader

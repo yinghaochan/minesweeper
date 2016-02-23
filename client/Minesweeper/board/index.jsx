@@ -1,20 +1,42 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { reset, tileClick } from 'client/_redux/Sweep'
 import Tile from './tile'
 import BoardHeader from './boardHeader'
 
-const Grid = React.createClass({
-  renderTiles(rowData, rowNum){
+
+const Game = React.createClass({
+  propTypes: {
+    board: React.PropTypes.array,
+    game: React.PropTypes.object.isRequired,
+    config: React.PropTypes.object.isRequired,
+    reset: React.PropTypes.func.isRequired,
+    tileClick: React.PropTypes.func.isRequired,
+  },
+
+  componentWillMount(){
+    const cfg = this.props.config
+    this.props.reset(cfg.rows, cfg.cols, cfg.mineProbability)
+  },
+
+  renderTiles(rowData){
     return rowData.map((tile, colNum) => {
-      return <Tile tile={tile} rowNum={rowNum} colNum={colNum} key={colNum} />
+      return (
+        <Tile 
+          tile={tile} 
+          key={colNum}
+          tileClick={this.props.tileClick}
+          game={this.props.game} 
+        />
+      )
     })
   },
 
   renderRows(){
     return this.props.board.map((rowData, rowNum) => {
       return (
-        <tr className="tile" key={rowNum}> 
-          { this.renderTiles(rowData, rowNum) } 
+        <tr key={rowNum}> 
+          { this.renderTiles(rowData) } 
         </tr>
         )
     })
@@ -23,7 +45,11 @@ const Grid = React.createClass({
   render(){
     return (
       <div className="board">
-        <BoardHeader setBoard={this.props.setBoard}/> 
+        <BoardHeader 
+          game={this.props.game} 
+          config={this.props.config} 
+          reset={this.props.reset} 
+        /> 
         <table>
           <tbody> 
             { this.props.board ? this.renderRows() : '' }
@@ -36,8 +62,10 @@ const Grid = React.createClass({
 
 function mapStateToProps (state){
   return {
-    board: state.minesweeper.get('board'),
+    board: state.sweep.board,
+    game: state.sweep.game,
+    config: state.sweep.config,
   }
 }
 
-export default connect(mapStateToProps)(Grid)
+export default connect(mapStateToProps, { reset, tileClick })(Game)

@@ -1,48 +1,39 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { tileClick } from 'client/_redux/Minesweeper/clicks'
+
+import style from '../css/Sweep.import.css'
 
 const Tile = React.createClass({
-  handleClick(){
-    const {dispatch, rowNum, colNum, tile} = this.props
-
-    // disable the grid if you've lost
-    // feel free to win then set off a bomb
-    return (this.props.lost || this.props.won) ? null : dispatch(tileClick(rowNum, colNum, tile))
+  propTypes: {
+    tile: React.PropTypes.object.isRequired,
+    game: React.PropTypes.object.isRequired,
+    tileClick: React.PropTypes.func.isRequired,
   },
 
   renderTile(){
-    const { tile, lost } = this.props
-    const flagged = tile.get('flagged')
-    const revealed = tile.get('revealed')
+    const { won, lost } = this.props.game
+    const { flagged, revealed, bomb, adjacentBombs, rowNum, colNum } = this.props.tile
+    const tileClick = this.props.tileClick.bind(this, rowNum, colNum)
 
-    if(lost && tile.get('isBomb')){
-      return <button>x</button>
+    if((lost || won) && bomb){
+      return <button>X</button>
 
-    } else if(!flagged && !revealed){
-      return <button onClick={this.handleClick}>&nbsp;</button> 
+    } else if(!revealed){
+      return <button onClick={tileClick}>{flagged ? '!!' : '\u00a0'}</button> 
 
-    } else if(flagged && !revealed){
-      return <button onClick={this.handleClick}>!!</button>
-
-    } else if(revealed){
-      const nearBy = tile.get('nearby')
-
-      if(nearBy) return nearBy
+    } else if(revealed && adjacentBombs){
+      return adjacentBombs
       
+    } else {
       return ''
+        
     }
+    
   },
 
   render(){
-    return <td className="tile">{ this.renderTile() }</td>
+    return <td className={style.tile}>{ this.renderTile() }</td>
   }
 }) 
 
-function mapStateToProps (state) {
-  return {
-    lost: state.minesweeper.getIn(['game', 'lost'])
-  }
-}
 
-export default connect(mapStateToProps)(Tile)
+export default Tile

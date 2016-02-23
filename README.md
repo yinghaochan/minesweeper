@@ -1,7 +1,21 @@
 ### Minesweeper demo
-####Folders used:
-- `client/Minesweeper/board`
-- `client/_redux/Minesweeper`
+Click once to flag a mine (optional)
+Click again to reveal the tile
+
+To win, reveal all unmined tiles.
+
+#### Folders used:
+- `client/Minesweeper/board/`
+- `client/_redux/Sweep/`
+
+#### Notes 02 / 23
+- Rebuilt redux logic
+- No thunk used in any action
+- immutableJS no longer used
+- child components do not use connect
+- universal click handler-- no flag or reveal action
+- proptypes
+- import individual classes from css
 
 #### Notes
 - Adjust the board size and mine probability

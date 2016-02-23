@@ -17,9 +17,9 @@
   "css-loader": "^0.23.0",
   "extract-text-webpack-plugin": "^0.9.1",
 
-  "react-transform-hmr": "^1.0.0",
-  "react-transform-catch-errors": "^1.0.0",
-  "redbox-react": "^1.2.0",
+  "react-transform-hmr": "1.0.0",
+  "react-transform-catch-errors": "1.0.0",
+  "redbox-react": "1.2.0",
 
   "babel-eslint": "^4.1.6",
   "eslint": "^1.10.3",
@@ -36,6 +36,6 @@
   "redux-devtools": "^3.0.1",
   "redux-devtools-log-monitor": "^1.0.2",
   "redux-devtools-dock-monitor": "^1.0.1",
-  "immutable": "3.7.6"
+  "lodash": "4.5.1"
 
 }
